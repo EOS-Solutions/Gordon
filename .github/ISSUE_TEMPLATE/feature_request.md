@@ -1,25 +1,41 @@
 ---
-name: Feature request
+name: 🙋 Feature request
 about: Suggest an idea for this project
-title: ''
+title: "feat: add [what] to/in [where]"
 labels: ''
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+<!---
+Thanks for filing an issue 😄 ! Before you submit, please read the following:
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+Search open/closed issues before submitting. Someone may have requested the same feature before.
+-->
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+# 🙋 Feature Request
 
-**Product**
-- [ ] Gordon WebApp
-- [ ] Gordon Powershell
-- [ ] Bare.WebApi
+<!--- Provide a general summary of the feature here -->
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+## 🤔 Expected Behavior
+
+<!--- Tell us how the feature should work -->
+
+## 😯 Current Behavior
+
+<!--- Explain how the feature would alter/enhance current behavior -->
+
+## 💁 Possible Solution
+
+<!--- Ideas how to implement this feature -->
+<!--- What implementation solution would be ideal for you? -->
+
+## 💻 Examples
+
+<!-- Examples help us understand the requested feature better -->
+<!-- Attach screenshots or images if they would add detail to your request -->
+
+## Product
+- [ ] Gordon WebApp (Version: _WriteHereTheVersion_)
+- [ ] Gordon Powershell (Version: _WriteHereTheVersion_)
+- [ ] Bare.WebApi (Version: _WriteHereTheVersion_)
