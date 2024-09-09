@@ -770,8 +770,9 @@ video {
 
 @media screen and (max-width:40em) {
     .grid-row {
-        margin: 0 auto
+        margin: 0 auto;
     }
+
 }
 
 .grid-column {
@@ -790,7 +791,8 @@ video {
         flex-basis: 100%;
         max-width: 100%;
         padding: 0;
-        margin-left: 0
+        margin-left: 0;
+        text-align: center;
     }
 }
 
@@ -831,6 +833,16 @@ video {
 .column--bottom {
     -ms-flex-item-align: end;
     align-self: flex-end
+}
+
+
+@media screen and (max-width:40em) {
+    .span-sm-half{
+        -ms-flex-preferred-size: 50% !important;
+        flex-basis: 50% !important;
+        max-width: 50% !important;
+
+    }
 }
 
 .span-12,
@@ -1756,4 +1768,9 @@ hr {
 
 .clearfix:after {
     clear: both
+}
+
+.productImage{
+    width: 250px;
+    height: 250px;
 }
