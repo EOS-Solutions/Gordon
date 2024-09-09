@@ -1774,3 +1774,20 @@ hr {
     width: 250px;
     height: 250px;
 }
+
+
+@media screen and (max-width:40em) {
+    .productImage{
+        width: 100px;
+        height: 100px;
+    }    
+
+    div:has(> .productImage)
+    {
+        margin-top: 2rem;
+        margin-bottom: 0;
+    }
+
+}
+
+
