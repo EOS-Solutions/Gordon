@@ -9,13 +9,19 @@ assignees: ''
 
 <!---
 Thanks for filing an issue 😄 ! Before you submit, please read the following:
-
 Search open/closed issues before submitting. Someone may have reported the same issue before.
 -->
 
 # 🐛 Bug Report
 
-<!--- Provide a general summary of the issue here -->
+<!--- 
+Provide a general summary of the issue here 
+Add also a log, if present. 
+The logs can be found here: 
+Gordon: "%appdata%\EOS Solutions\Gordon\UILogs\debug.txt"
+Gordon Xliff Editor:  "%appdata%\EOS Solutions\XLIFF\debuglog.txt"
+Gordon Installer: "%localappdata%\Programs\EOS Solutions\.logs\"
+-->
 
 ## 💻 Repro
 
@@ -40,8 +46,10 @@ Search open/closed issues before submitting. Someone may have reported the same 
 <!---If applicable, add screenshots to help explain your problem. -->
 
 ## Product
-- [ ] Gordon WebApp (Version: _WriteHereTheVersion_)
+- [ ] Gordon (Version: _WriteHereTheVersion_)
 - [ ] Gordon Powershell (Version: _WriteHereTheVersion_)
-- [ ] Bare.WebApi (Version: _WriteHereTheVersion_)
+- [ ] Gordon Service (Version: _WriteHereTheVersion_)
+- [ ] Gordon Xliff Editor
+- [ ] EOS Gordon Installer
 
 
