@@ -837,7 +837,7 @@ video {
 
 
 @media screen and (max-width:40em) {
-    .span-sm-half{
+    .span-sm-half {
         -ms-flex-preferred-size: 50% !important;
         flex-basis: 50% !important;
         max-width: 50% !important;
@@ -1770,20 +1770,19 @@ hr {
     clear: both
 }
 
-.productImage{
+.productImage {
     width: 250px;
     height: 250px;
 }
 
 
 @media screen and (max-width:40em) {
-    .productImage{
+    .productImage {
         width: 100px;
         height: 100px;
-    }    
+    }
 
-    div:has(> .productImage)
-    {
+    div:has(> .productImage) {
         margin-top: 2rem;
         margin-bottom: 0;
     }
@@ -1791,3 +1790,51 @@ hr {
 }
 
 
+
+.download {
+    overflow: hidden;
+    border-radius: 5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 5px solid transparent;
+    background: #f97544;
+    padding: 20px 26px 20px 28px;
+    width: 220px;
+    display: inline;
+    text-decoration: none;
+}
+
+.download span {
+    margin-left: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #f2f2f2;
+}
+
+.download svg {
+    width: 40px;
+    fill: #f2f2f2;
+    transform: translateY(13px);
+}
+
+
+.download:hover 
+{
+    border: 2px solid #f97544;
+    background: transparent;
+}
+
+.download:hover svg 
+{
+    fill: #f97544;
+}
+
+.download:hover span {
+    color: #f97544;
+}
+
+.colorInverted {
+    border: 5px solid #f97544;
+
+}
