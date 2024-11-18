@@ -1,0 +1,18 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Check Milestones
+
+on:
+  milestone:
+    types: [closed]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  Comment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ../milestones/action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

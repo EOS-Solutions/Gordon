@@ -1,0 +1,29 @@
+name: 'Gordon Suite Milestone Comment'
+author: 'f4n0'
+description: 'Comment on Milestone Issues and Pull Requests'
+
+branding:
+  color: 'gray-dark'
+  icon: 'message-square'
+
+inputs:
+  milestone:
+    description: 'Numeric identifier of milestone.'
+    required: false
+    default: ${{ github.event.milestone.number }}
+  state:
+    description: 'Issue and pull request state. Only those in this state will receive a comment. Valid values are `all`, `closed`, or `open`.'
+    required: false
+    default: 'all'
+  token:
+    description: 'GitHub token to perform actions.'
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  ids:
+    description: 'Numeric identifiers of all issues and pull requests that received comments.'
+
+runs:
+  using: 'node20'
+  main: './dist/index.js'
