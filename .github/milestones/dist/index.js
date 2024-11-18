@@ -35,7 +35,7 @@ async function run() {
             break;
           case "Gordon VSCode":
             appName = "Gordon for VSCode";
-            appId = "";
+            appId = "eos-solutions.gordon";
             break;
           case "Gordon":
             appName = "Gordon";

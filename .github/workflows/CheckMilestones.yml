@@ -13,6 +13,10 @@ jobs:
   Comment:
     runs-on: ubuntu-latest
     steps:
-      - uses: ../milestones/action@v1
+      - name: check out repository
+        uses: actions/checkout@v4
+      # This step references the directory that contains the action.
+      - name: Running milestone check
+        uses: ./.github/milestones
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          state: "closed"
