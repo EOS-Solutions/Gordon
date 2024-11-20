@@ -21,10 +21,6 @@ Search open/closed issues before submitting. Someone may have requested the same
 
 <!--- Tell us how the feature should work -->
 
-## 😯 Current Behavior
-
-<!--- Explain how the feature would alter/enhance current behavior -->
-
 ## 💁 Possible Solution
 
 <!--- Ideas how to implement this feature -->
@@ -36,6 +32,10 @@ Search open/closed issues before submitting. Someone may have requested the same
 <!-- Attach screenshots or images if they would add detail to your request -->
 
 ## Product
-- [ ] Gordon WebApp (Version: _WriteHereTheVersion_)
+- [ ] Gordon (Version: _WriteHereTheVersion_)
+- [ ] Gordon VSCode (Version: _WriteHereTheVersion_)
 - [ ] Gordon Powershell (Version: _WriteHereTheVersion_)
-- [ ] Bare.WebApi (Version: _WriteHereTheVersion_)
+- [ ] Gordon Service (Version: _WriteHereTheVersion_)
+- [ ] Gordon Xliff Editor
+- [ ] EOS Gordon Installer
+

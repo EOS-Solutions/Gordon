@@ -31,12 +31,6 @@ Gordon Installer: "%localappdata%\Programs\EOS Solutions\.logs\"
 
 <!--- Tell us what should happen -->
 
-## 😯 Current Behavior
-
-<!--- Tell us what happens instead of the expected behavior -->
-<!--- If you are seeing an error, please include the full error message and stack trace -->
-<!--- If applicable, provide screenshots -->
-
 ## 💁 Possible Solution
 
 <!--- Not obligatory, but suggest a fix/reason for the bug -->
@@ -47,6 +41,7 @@ Gordon Installer: "%localappdata%\Programs\EOS Solutions\.logs\"
 
 ## Product
 - [ ] Gordon (Version: _WriteHereTheVersion_)
+- [ ] Gordon VSCode (Version: _WriteHereTheVersion_)
 - [ ] Gordon Powershell (Version: _WriteHereTheVersion_)
 - [ ] Gordon Service (Version: _WriteHereTheVersion_)
 - [ ] Gordon Xliff Editor
