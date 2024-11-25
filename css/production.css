@@ -1838,3 +1838,7 @@ hr {
     border: 5px solid #f97544;
 
 }
+
+.ProductDescription{
+    flex-grow: 2;
+}
