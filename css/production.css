@@ -625,10 +625,6 @@ video {
     max-height: 300px
 }
 
-.download {
-    max-height: 45px
-}
-
 .mentioned {
     max-height: 45px
 }
@@ -1791,7 +1787,69 @@ hr {
 
 
 
-.download {
+.LinkButton span {
+    margin-left: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #f2f2f2;    
+    margin-left: 15px;
+}
+
+.LinkButton svg {
+    width: 40px;
+}
+
+.docs svg {    
+    stroke: #f2f2f2;
+}
+.download svg {    
+    fill: #f2f2f2;
+}
+
+.LinkButton:hover {
+    border: 2px solid #f97544;
+    background: transparent;
+}
+
+.download:hover svg {
+    fill: #f97544;
+}
+
+.LinkButton:hover span {
+    color: #f97544;
+}
+
+.colorInverted {
+    border: 5px solid #f97544 !important;    
+    margin: 0 auto;
+}
+
+.ProductDescription {
+    flex-grow: 2;
+}
+
+
+.docs {
+
+    margin-left: 15px;
+}
+
+
+.docs:hover svg {
+    stroke: #f97544;
+}
+
+
+.headerLinkContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.LinkButton{
     overflow: hidden;
     border-radius: 5px;
     -webkit-box-sizing: border-box;
@@ -1799,46 +1857,24 @@ hr {
     box-sizing: border-box;
     border: 5px solid transparent;
     background: #f97544;
-    padding: 20px 26px 20px 28px;
-    width: 220px;
-    display: inline;
+    padding: 10px 26px 10px 28px;
+    width: 250px;
     text-decoration: none;
+    display: flex;    
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
 }
 
-.download span {
-    margin-left: 5px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #f2f2f2;
-}
-
-.download svg {
-    width: 40px;
-    fill: #f2f2f2;
-    transform: translateY(13px);
-}
-
-
-.download:hover 
-{
-    border: 2px solid #f97544;
-    background: transparent;
-}
-
-.download:hover svg 
-{
-    fill: #f97544;
-}
-
-.download:hover span {
-    color: #f97544;
-}
-
-.colorInverted {
-    border: 5px solid #f97544;
-
-}
-
-.ProductDescription{
-    flex-grow: 2;
+@media screen and (max-width:40em) {
+    .headerLinkContainer {
+        flex-direction: column;
+    }
+    .docs{
+        margin-left: 0;
+        margin-top: 15px;
+    }
+    .LinkButton span {
+        font-size: 1.2rem;
+    }
 }
