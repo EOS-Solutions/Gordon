@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Consent Helper - Gordon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gordon-blue: #f97544;
+            --gordon-blue-dark: #e5602f;
+            --gordon-blue-light: #ffeee8;
+            --gordon-dark: #3b3b48;
+            --gordon-gray-light: #f7f7f7;
+            --gordon-gray: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--gordon-dark);
+            background-color: var(--gordon-gray-light);
+            margin: 0;
+            padding: 0;
+        }
+
+        .gordon-header {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .gordon-logo {
+            height: 40px;
+            margin-right: 20px;
+        }
+
+        .gordon-title {
+            font-size: 22px;
+            color: var(--gordon-dark);
+            font-weight: 500;
+        }
+
+        .gordon-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        h1 {
+            color: var(--gordon-dark);
+            font-size: 26px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gordon-gray);
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 500;
+            margin: 25px 0 15px;
+            color: var(--gordon-dark);
+        }
+
+        .gordon-card {
+            background-color: #fff;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--gordon-blue);
+        }
+
+        .gordon-info {
+            background-color: var(--gordon-blue-light);
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid var(--gordon-blue);
+        }
+
+        .gordon-btn {
+            background-color: var(--gordon-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .gordon-btn:hover {
+            background-color: var(--gordon-blue-dark);
+        }
+
+        .gordon-btn-secondary {
+            background-color: #fff;
+            color: var(--gordon-blue);
+            border: 1px solid var(--gordon-blue);
+        }
+
+        .gordon-btn-secondary:hover {
+            background-color: var(--gordon-blue-light);
+        }
+
+        .gordon-input {
+            padding: 10px;
+            border: 1px solid var(--gordon-gray);
+            border-radius: 4px;
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .gordon-code {
+            font-family: monospace;
+            background-color: var(--gordon-gray-light);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .gordon-url-display {
+            background-color: var(--gordon-gray-light);
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid var(--gordon-gray);
+            margin: 10px 0;
+            word-break: break-all;
+            font-family: monospace;
+        }
+
+        .gordon-footer {
+            background-color: var(--gordon-dark);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .gordon-icon {
+            margin-right: 8px;
+        }
+
+        .gordon-flex {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .gordon-container {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .gordon-flex {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="gordon-container">
+        <h1>Gordon SaaS Admin Consent Helper</h1>
+
+        <div class="gordon-info">
+            <p><strong>This tool helps administrators grant consent for an application to access Business
+                    Central.</strong></p>
+            <p>When you click the button below, you'll be redirected to Microsoft's authorization page where you can
+                review and approve the permissions as an administrator.</p>
+        </div>
+
+        <div class="gordon-card">
+            <h2>Application Details</h2>
+            <p><strong>Application ID:</strong> <span class="gordon-code">97e473b7-494e-4abd-bfc2-4c78102c3795</span>
+            </p>
+            <p><strong>Required Scope:</strong> <span
+                    class="gordon-code">https://api.businesscentral.dynamics.com/.default</span></p>
+        </div>
+
+        <div>
+            <h2>Enter Your Tenant Information</h2>
+            <p>Please enter your Azure AD tenant ID or domain name:</p>
+            <input type="text" id="tenantId" class="gordon-input" placeholder="contoso.onmicrosoft.com or tenant ID">
+            <button onclick="generateUrl()" class="gordon-btn">
+                <i class="fas fa-link gordon-icon"></i>Generate Consent URL
+            </button>
+
+            <div id="urlResult" style="display: none; margin-top: 20px;">
+                <h2>Admin Consent URL</h2>
+                <p>Use this URL to grant admin consent:</p>
+                <div class="gordon-url-display" id="consentUrl"></div>
+                <div class="gordon-flex">
+                    <button onclick="openConsentUrl()" class="gordon-btn">
+                        <i class="fas fa-external-link-alt gordon-icon"></i>Open Consent Page
+                    </button>
+                    <button onclick="copyUrl()" class="gordon-btn gordon-btn-secondary">
+                        <i class="fas fa-copy gordon-icon"></i>Copy URL
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <h2>What is happening?</h2>
+            <p>This tool generates a URL that directs administrators to Microsoft's consent page for the specific
+                application with ID: <span class="gordon-code">97e473b7-494e-4abd-bfc2-4c78102c3795</span>.</p>
+            <p>The application is requesting access to Business Central API with the scope: <span
+                    class="gordon-code">https://api.businesscentral.dynamics.com/.default</span></p>
+            <p>By granting admin consent, you're allowing this application to access Business Central on behalf of users
+                in your organization.</p>
+        </div>
+    </div>
+
+    <script>
+        function generateUrl() {
+            const tenantId = document.getElementById('tenantId').value.trim();
+
+            if (!tenantId) {
+                alert('Please enter your tenant ID or domain name');
+                return;
+            }
+
+            const appId = '97e473b7-494e-4abd-bfc2-4c78102c3795';
+            const scope = 'https://api.businesscentral.dynamics.com/.default';
+
+            const consentUrl = `https://login.microsoftonline.com/${tenantId}/adminconsent?client_id=${appId}&scope=${encodeURIComponent(scope)}&redirect_uri=${encodeURIComponent(window.location.href)}`;
+
+            document.getElementById('consentUrl').textContent = consentUrl;
+            document.getElementById('urlResult').style.display = 'block';
+        }
+
+        function openConsentUrl() {
+            const consentUrl = document.getElementById('consentUrl').textContent;
+            window.open(consentUrl, '_blank');
+        }
+
+        function copyUrl() {
+            const consentUrl = document.getElementById('consentUrl').textContent;
+            navigator.clipboard.writeText(consentUrl).then(() => {
+                alert('URL copied to clipboard!');
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+                // Fallback
+                const tempInput = document.createElement('textarea');
+                tempInput.value = consentUrl;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                alert('URL copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+
+</html>
