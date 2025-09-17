@@ -1791,7 +1791,7 @@ hr {
     margin-left: 5px;
     font-size: 1rem;
     font-weight: bold;
-    color: #f2f2f2;    
+    color: #f2f2f2;
     margin-left: 15px;
 }
 
@@ -1799,11 +1799,34 @@ hr {
     width: 40px;
 }
 
-.docs svg {    
+.docs svg {
     stroke: #f2f2f2;
 }
-.download svg {    
+
+.download svg {
     fill: #f2f2f2;
+}
+
+.download:hover svg {
+    fill: #f97544;
+}
+
+.download {
+    grid-area: download;
+    width: 100% !important;
+}
+
+.github {
+    width: 100% !important;
+    grid-area: github;
+}
+
+.github svg {
+    fill: #f2f2f2;
+}
+
+.github:hover svg {
+    fill: #f97544;
 }
 
 .LinkButton:hover {
@@ -1811,16 +1834,13 @@ hr {
     background: transparent;
 }
 
-.download:hover svg {
-    fill: #f97544;
-}
 
 .LinkButton:hover span {
     color: #f97544;
 }
 
 .colorInverted {
-    border: 5px solid #f97544 !important;    
+    border: 5px solid #f97544 !important;
     margin: 0 auto;
 }
 
@@ -1830,8 +1850,8 @@ hr {
 
 
 .docs {
-
-    margin-left: 15px;
+    width: 100% !important;
+    grid-area: docs;
 }
 
 
@@ -1841,15 +1861,18 @@ hr {
 
 
 .headerLinkContainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
+    width: 50%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "download download"
+        "docs github";
+    gap: 8px;
 }
 
-.LinkButton{
+.LinkButton {
     overflow: hidden;
     border-radius: 5px;
     -webkit-box-sizing: border-box;
@@ -1860,20 +1883,20 @@ hr {
     padding: 10px 26px 10px 28px;
     width: 250px;
     text-decoration: none;
-    display: flex;    
+    display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: nowrap;
 }
 
 @media screen and (max-width:40em) {
-    .headerLinkContainer {
-        flex-direction: column;
-    }
-    .docs{
+    .headerLinkContainer {}
+
+    .docs {
         margin-left: 0;
         margin-top: 15px;
     }
+
     .LinkButton span {
         font-size: 1.2rem;
     }
