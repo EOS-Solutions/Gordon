@@ -1,6 +1,10 @@
 # Gordon
 Repository to manage Issues related to Gordon apps 
 
+# TOC
+
+- [Gordon Build Configuration](BuildConfig/readme.md) Gordon's flexible build configuration files
+
 # Gordon? What's that? 
 Gordon ecosystem is a set of tools that helps you easily manage Business Central environments
 
