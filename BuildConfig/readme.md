@@ -121,6 +121,7 @@ A configuration file is a JSON object. All properties are optional.
 | `PreprocessorSymbols` | `string[]` | Additional preprocessor symbols to define during compilation. |
 | `IncludeTestDependencies` | `bool` | `true` to add test dependencies, `false` to remove them, omit to leave as-is. |
 | `KeepBuildFolder` | `bool` | When `true`, the temporary build folder is not deleted after the build completes. Useful for debugging. |
+| `RespectMinVersion` | `bool` | Applies only to workspace builds. When `true`, the output version is automatically raised to satisfy any minimum version required by other projects in the same workspace. |
 
 ### Metadata
 
@@ -129,7 +130,7 @@ Nested under the `metadata` key.
 | Property | Type | Description |
 |----------|------|-------------|
 | `Version` | `string` | Sets the app version (e.g. `"2.1.0.0"`) before building. |
-| `IncrementBuildVersion` | `bool` | When `true`, the build (fourth) component of the version is incremented automatically and written back to the source file. See [Incrementing Build Version](#incrementing-build-version). |
+| `IncrementBuildVersion` | `bool` | When `true`, the build (fourth) component of the version is incremented automatically before the build and written back to the source file. Requires `Version` to also be set. See [Incrementing Build Version](#incrementing-build-version). |
 | `RepositoryUrl` | `string` | Source repository URL to embed in the package (runtime ≥ 12). |
 | `Commit` | `string` | Source commit SHA to embed in the package (runtime ≥ 12). |
 | `BuildBy` | `string` | Name of the system or agent that performed the build (runtime ≥ 12). |
@@ -152,6 +153,8 @@ Nested under the `options` key. These map directly to `alc.exe` arguments.
 | `Target` | `string` | Compilation target: `internal`, `solution`, or `extension`. |
 | `GenerateCode` | `bool` | Include metadata and IL code in the output package. |
 | `GenerateReportLayout` | `bool` | Generate or update report layouts from the dataset. |
+| `HideDiagnosticsFromOutput` | `bool` | Hides compiler diagnostic messages from console output. Defaults to `true`. Diagnostics are still available programmatically. |
+| `LogLevel` | `string` | Compiler log level. Valid values: `Normal` (default), `Verbose`, `Warning`, `Error`, `Minimal`. |
 | `Analyzers` | `string[]` | Paths to additional code-analysis DLLs. |
 | `ParallelDegree` | `int` | Maximum number of parallel compiler tasks. |
 | `ReportSuppressedDiagnostics` | `bool` | Emit diagnostics that are suppressed in source code. |
@@ -198,6 +201,34 @@ Nested under the `options` key. These map directly to `alc.exe` arguments.
   }
 }
 ```
+
+---
+
+## Incrementing Build Version
+
+When `Metadata.IncrementBuildVersion` is `true` and `Metadata.Version` is set, the build (fourth) component of the version is incremented automatically before the project is compiled.
+
+**Requirements:**
+- Both `Version` and `IncrementBuildVersion` must be set. They can come from different files in the inheritance chain — for example, `Version` from a parent-level file and `IncrementBuildVersion` from a project-level file.
+- The incremented version is written back to the source file that originally defined `Version` (the innermost inherited file with a non-null `Version`).
+
+**Example:**
+
+```
+Workspace/
+└── .buildconfig/
+    └── release.json     → Version: "2.0.0.5", IncrementBuildVersion: true
+```
+
+Each time a `release` build runs, `release.json` is updated in-place:
+
+| Build | Resulting version |
+|-------|-------------------|
+| 1st   | `2.0.0.6`         |
+| 2nd   | `2.0.0.7`         |
+| 3rd   | `2.0.0.8`         |
+
+> The version is incremented at the **revision** (fourth) component only. Major, minor, and patch components are never changed automatically.
 ---
 
 ## Incrementing Build Version

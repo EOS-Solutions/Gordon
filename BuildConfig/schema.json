@@ -1,0 +1,182 @@
+{
+    "$id": "https://schemas.eos-solutions.it/gordon/buildconfig.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "Description": {
+            "type": "string",
+            "description": "The description of the build configuration."
+        },
+        "Metadata": {
+            "type": "object",
+            "description": "The metadata of the build configuration.",
+            "properties": {
+                "Version": {
+                    "type": "string",
+                    "description": "The version to be used when building."
+                },
+                "RepositoryUrl": {
+                    "type": "string",
+                    "description": "Specifies the URL to the repository where the source code to the project is."
+                },
+                "Commit": {
+                    "type": "string",
+                    "description": "Specifies the commit of the source code."
+                },
+                "IncrementBuildVersion": {
+                    "type": "boolean",
+                    "description": "If true, the build revision number is incremented before each build."
+                },
+                "BuildBy": {
+                    "type": "string",
+                    "description": "Specifies the name of the system that assisted in the compilation."
+                },
+                "BuildUrl": {
+                    "type": "string",
+                    "description": "Specifies the URL of where the package can be found."
+                }
+            }
+        },
+        "Options": {
+            "type": "object",
+            "description": "The ALC options for the build configuration.",
+            "properties": {
+                "AlcFolder": {
+                    "type": "string",
+                    "description": "The path to the ALC folder. If this is not specified, the most recent version of ALC.exe will be used."
+                },
+                "OutputFilename": {
+                    "type": "string",
+                    "description": "If specified, the output file will be written to this file path. This takes precedence over 'OutputFolder'"
+                },
+                "OutputFolder": {
+                    "type": "string",
+                    "description": "If specified, the output file will be written to this folder. This is ignored if 'OutputFilename' is specified."
+                },
+                "ErrorLog": {
+                    "type": "string",
+                    "description": "If specified, errors will be logged to this file path."
+                },
+                "AssemblyProbingPaths": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Specifies the assembly probing paths to be used during build."
+                },
+                "PackageCacheFolders": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Indicates the package cache paths to use for builds."
+                },
+                "WarnAsError": {
+                    "type": "boolean",
+                    "description": "Indicates if warnings should be treated as errors."
+                },
+                "RuleSet": {
+                    "type": "string",
+                    "description": "If specified, the ruleset file will be used to alter severity of specific diagnostics."
+                },
+                "Target": {
+                    "type": "string",
+                    "description": "Specify the compilation target.: internal, solution, extension",
+                    "enum": [
+                        "Internal",
+                        "Solution",
+                        "Extension"
+                    ]
+                },
+                "GenerateCode": {
+                    "type": "boolean",
+                    "description": "Specifies whether metadata and code should be generated and packaged in the output file. (Default: Disabled)"
+                },
+                "GenerateReportLayout": {
+                    "type": "boolean",
+                    "description": "Specifies whether report layouts should be created and or updated with the dataset. (Default: Enabled)"
+                },
+                "HideDiagnosticsFromOutput": {
+                    "type": "boolean",
+                    "description": "Specifies whether diagnostic messages are hidden from console output."
+                },
+                "Analyzers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "A list of analyzers to use during build"
+                },
+                "LogLevel": {
+                    "type": "string",
+                    "enum": [
+                        "Debug",
+                        "Verbose",
+                        "Normal",
+                        "Warning",
+                        "Error"
+                    ]
+                },
+                "ParallelDegree": {
+                    "type": "integer"
+                },
+                "ReportSuppressedDiagnostics": {
+                    "type": "boolean"
+                },
+                "SourceRepositoryUrl": {
+                    "type": "string",
+                    "description": "Specifies the URL to the repository where the source code to the project is."
+                },
+                "SourceCommit": {
+                    "type": "string",
+                    "description": "Specifies the commit of the source code."
+                },
+                "BuildBy": {
+                    "type": "string",
+                    "description": "Specifies the name of the system that assisted in the compilation."
+                },
+                "BuildUrl": {
+                    "type": "string",
+                    "description": "Specifies the URL of where the package can be found."
+                }
+            }
+        },
+        "OptionsFile": {
+            "type": "string",
+            "description": "The path to the ALC options file. If this is specified, the Options property is ignored."
+        },
+        "IncludePatterns": {
+            "type": "array",
+            "description": "A list of glob patterns of files to include in the build. If this is not specified, all files are included.",
+            "items": {
+                "type": "string"
+            }
+        },
+        "ExcludePatterns": {
+            "type": "array",
+            "description": "A list of glob patterns of files to exclude from the build. This is applied after the include patterns.",
+            "items": {
+                "type": "string"
+            }
+        },
+        "PreprocessorSymbols": {
+            "type": "array",
+            "description": "Specifies a list of preprocessor symbols to define when building the project.",
+            "items": {
+                "type": "string"
+            }
+        },
+        "IncludeTestDependencies": {
+            "type": "boolean",
+            "description": "Specifies whether test dependencies should be added (=true), removed (=false) or left as is (=null)."
+        },
+        "KeepBuildFolder": {
+            "type": "boolean",
+            "description": "Specifies if the temporary folder that is used for building the project is kept after the build completes. If this is null or false (default) the folder is deleted."
+        },
+        "RespectMinVersion": {
+            "type": "boolean",
+            "description": "Applies only to workspace builds. When true, the output version is automatically raised to satisfy any minimum version required by other projects in the same workspace."
+        }
+    }
+}
