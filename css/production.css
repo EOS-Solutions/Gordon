@@ -1901,3 +1901,44 @@ hr {
         font-size: 1.2rem;
     }
 }
+
+/* === MOBILE FIXES === */
+ 
+.headerLinkContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .6rem;
+}
+ 
+@media screen and (max-width: 40em) {
+ 
+  /* Header buttons: keep them inline, don't go full-width */
+  .headerLinkContainer .LinkButton {
+    display: inline-flex;
+    width: auto;
+    margin-top: 0;
+  }
+ 
+  /* Product rows: stack image below text (order already set in HTML) */
+  .grid-row.grid-row--center {
+    flex-direction: column;
+  }
+ 
+  /* Spacer column is useless on mobile */
+  .grid-column.span-1 {
+    display: none;
+  }
+ 
+  /* Product images: cap size and center */
+  .productImage {
+    max-width: 80%;
+    margin: 0 auto;
+    display: block;
+  }
+ 
+  /* Footer: stack the two halves */
+  .align--right.align--center-on-mobile {
+    text-align: center;
+  }
+}
