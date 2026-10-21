@@ -1903,42 +1903,66 @@ hr {
 }
 
 /* === MOBILE FIXES === */
- 
-.headerLinkContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: .6rem;
-}
- 
 @media screen and (max-width: 40em) {
- 
-  /* Header buttons: keep them inline, don't go full-width */
-  .headerLinkContainer .LinkButton {
-    display: inline-flex;
-    width: auto;
-    margin-top: 0;
-  }
- 
-  /* Product rows: stack image below text (order already set in HTML) */
-  .grid-row.grid-row--center {
-    flex-direction: column;
-  }
- 
-  /* Spacer column is useless on mobile */
-  .grid-column.span-1 {
-    display: none;
-  }
- 
-  /* Product images: cap size and center */
-  .productImage {
-    max-width: 80%;
-    margin: 0 auto;
-    display: block;
-  }
- 
-  /* Footer: stack the two halves */
-  .align--right.align--center-on-mobile {
-    text-align: center;
-  }
+    .headerLinkContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: .6rem;
+    }
+
+    .headerLinkContainer .LinkButton {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+        padding: 8px 16px;
+        justify-content: center;
+    }
+
+    .headerLinkContainer .LinkButton svg {
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+    }
+
+    .headerLinkContainer .LinkButton span {
+        margin-left: 12px;
+        font-size: 1rem;
+    }
+
+    .grid-row.grid-row--center {
+        flex-direction: column;
+    }
+
+    .grid-column.span-1 {
+        display: none;
+    }
+
+    .productImage {
+        width: 100px;
+        height: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .align--right.align--center-on-mobile {
+        text-align: center;
+    }
+}
+
+@media screen and (min-width: 40.01em) and (max-width: 75em) {
+    .headerLinkContainer {
+        width: 80%;
+        max-width: 560px;
+    }
+
+    .headerLinkContainer .LinkButton {
+        padding: 8px 12px;
+    }
+
+    .headerLinkContainer .LinkButton svg {
+        flex: 0 0 40px;
+    }
 }
