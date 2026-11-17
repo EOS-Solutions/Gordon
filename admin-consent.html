@@ -1,271 +1,1098 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Consent Helper - Gordon</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f2f2f2">
+    <meta name="description"
+        content="Authorize Gordon in your Microsoft Entra tenant so users can sign in to Gordon.">
+    <title>Authorize Gordon in Your Microsoft Tenant | Gordon</title>
     <style>
         :root {
-            --gordon-blue: #f97544;
-            --gordon-blue-dark: #e5602f;
-            --gordon-blue-light: #ffeee8;
-            --gordon-dark: #3b3b48;
-            --gordon-gray-light: #f7f7f7;
-            --gordon-gray: #e0e0e0;
+            color-scheme: light;
+            --page: #f2f2f2;
+            --surface: #ffffff;
+            --text: #262b3a;
+            --muted: #4a5472;
+            --line: #d6dbe7;
+            --brand: #294ace;
+            --brand-hover: #213ba3;
+            --brand-soft: #f0f2fc;
+            --gordon-orange: #f97544;
+            --gordon-orange-hover: #ed6e3f;
+            --gordon-orange-ink: #a83f19;
+            --gordon-orange-soft: #fff3ed;
+            --gordon-orange-border: #f2c5b1;
+            --success: #0b5a0b;
+            --success-bg: #f1faf1;
+            --success-border: #107c10;
+            --warning: #5c4200;
+            --warning-bg: #fff8e6;
+            --warning-border: #d29200;
+            --error: #8e1f25;
+            --error-bg: #fdf2f3;
+            --error-border: #a4262c;
+            --radius: 16px;
+            --shadow: 0 8px 26px rgba(16, 42, 67, 0.08);
         }
 
-        * {
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Segoe UI', 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: var(--gordon-dark);
-            background-color: var(--gordon-gray-light);
+            min-width: 320px;
             margin: 0;
-            padding: 0;
+            background: var(--page);
+            color: var(--text);
+            font-family: Montserrat, Avenir, "Avenir Next", Trebuchet, Verdana, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
         }
 
-        .gordon-header {
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 15px 20px;
+        ::selection {
+            background: var(--brand);
+            color: #fff;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button,
+        input,
+        summary {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--brand);
+            outline-offset: 3px;
+        }
+
+        .skip-link {
+            position: absolute;
+            z-index: 10;
+            top: 8px;
+            left: 8px;
+            transform: translateY(-160%);
+            padding: 10px 14px;
+            border-radius: 6px;
+            background: #fff;
+            color: #003e6b;
+            font-weight: 700;
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+        }
+
+        .site-header {
+            border-bottom: 3px solid var(--gordon-orange);
+            background: var(--surface);
+        }
+
+        .header-inner {
             display: flex;
+            width: min(100% - 40px, 1000px);
+            min-height: 72px;
+            margin: 0 auto;
             align-items: center;
+            justify-content: space-between;
+            gap: 20px;
         }
 
-        .gordon-logo {
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 40px;
             height: 40px;
-            margin-right: 20px;
+            border-radius: 7px;
+            background: var(--gordon-orange);
+            color: var(--text);
+            font-size: 23px;
+            font-weight: 700;
+            place-items: center;
         }
 
-        .gordon-title {
-            font-size: 22px;
-            color: var(--gordon-dark);
-            font-weight: 500;
+        .brand-name {
+            display: block;
+            font-size: 19px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
         }
 
-        .gordon-container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: #fff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
+        .brand-owner {
+            display: block;
+            margin-top: 2px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.2;
+        }
+
+        .header-context {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .page-shell {
+            width: min(100% - 40px, 900px);
+            margin: 0 auto;
+            padding: 20px 0 64px;
+        }
+
+        .hero {
+            margin-bottom: 26px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 8px;
+            color: var(--gordon-orange-ink);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: "Source Serif Pro", Georgia, Times, serif;
         }
 
         h1 {
-            color: var(--gordon-dark);
-            font-size: 26px;
-            font-weight: 500;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--gordon-gray);
+            max-width: 780px;
+            margin-bottom: 12px;
+            font-size: clamp(30px, 5vw, 42px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
         }
 
-        h2 {
-            font-size: 20px;
-            font-weight: 500;
-            margin: 25px 0 15px;
-            color: var(--gordon-dark);
+        .hero-description {
+            max-width: 690px;
+            margin-bottom: 0;
+            color: var(--muted);
+            font-size: 17px;
         }
 
-        .gordon-card {
-            background-color: #fff;
-            border-radius: 4px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid var(--gordon-blue);
+        .panel {
+            margin-top: 20px;
+            padding: 26px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--surface);
+            box-shadow: var(--shadow);
         }
 
-        .gordon-info {
-            background-color: var(--gordon-blue-light);
-            border-radius: 4px;
-            padding: 15px;
-            margin: 15px 0;
-            border-left: 4px solid var(--gordon-blue);
+        .intro-panel {
+            display: grid;
+            grid-template-columns: 44px minmax(0, 1fr);
+            gap: 18px;
+            border-color: var(--gordon-orange-border);
+            border-left: 4px solid var(--gordon-orange);
+            background: var(--gordon-orange-soft);
+            box-shadow: none;
         }
 
-        .gordon-btn {
-            background-color: var(--gordon-blue);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.2s;
+        .info-mark {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--gordon-orange);
+            color: var(--text);
+            font-size: 22px;
+            font-weight: 700;
+            place-items: center;
         }
 
-        .gordon-btn:hover {
-            background-color: var(--gordon-blue-dark);
+        .intro-copy p {
+            margin-bottom: 10px;
         }
 
-        .gordon-btn-secondary {
-            background-color: #fff;
-            color: var(--gordon-blue);
-            border: 1px solid var(--gordon-blue);
+        .intro-copy h2 {
+            margin-bottom: 8px;
+            color: var(--text);
+            font-size: 21px;
+            font-weight: 700;
+            line-height: 1.35;
         }
 
-        .gordon-btn-secondary:hover {
-            background-color: var(--gordon-blue-light);
+        .intro-copy p:last-child {
+            margin-bottom: 0;
         }
 
-        .gordon-input {
-            padding: 10px;
-            border: 1px solid var(--gordon-gray);
-            border-radius: 4px;
-            width: 100%;
-            margin-bottom: 15px;
+        .intro-copy strong {
+            color: var(--gordon-orange-ink);
+        }
+
+        .panel-heading {
+            margin-bottom: 17px;
+        }
+
+        .panel-heading h2,
+        .faq-panel > h2 {
+            margin-bottom: 5px;
+            font-size: 21px;
+            font-weight: 650;
+            letter-spacing: -0.015em;
+            line-height: 1.35;
+        }
+
+        .panel-heading p {
+            margin-bottom: 0;
+            color: var(--muted);
+        }
+
+        .app-details {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin: 0;
+        }
+
+        .app-detail {
+            min-width: 0;
+            padding: 15px 16px;
+            border: 1px solid #e2e8ef;
+            border-radius: 10px;
+            background: #fbfcfe;
+        }
+
+        .app-detail dt {
+            margin-bottom: 4px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .app-detail dd {
+            margin: 0;
             font-size: 16px;
+            font-weight: 650;
+            overflow-wrap: anywhere;
         }
 
-        .gordon-code {
-            font-family: monospace;
-            background-color: var(--gordon-gray-light);
-            padding: 2px 4px;
-            border-radius: 3px;
+        code {
+            color: #25364a;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.94em;
         }
 
-        .gordon-url-display {
-            background-color: var(--gordon-gray-light);
-            padding: 15px;
-            border-radius: 4px;
-            border: 1px solid var(--gordon-gray);
-            margin: 10px 0;
-            word-break: break-all;
-            font-family: monospace;
+        .authorization-panel {
+            padding: 30px;
         }
 
-        .gordon-footer {
-            background-color: var(--gordon-dark);
-            color: #fff;
+        .tenant-field {
+            margin: 21px 0 18px;
+        }
+
+        .tenant-field label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 650;
+        }
+
+        .optional-label {
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        .tenant-input {
+            display: block;
+            width: 100%;
+            min-height: 50px;
+            padding: 11px 13px;
+            border: 1px solid #8997a5;
+            border-radius: 8px;
+            background: #fff;
+            color: var(--text);
+        }
+
+        .tenant-input::placeholder {
+            color: #626f7b;
+            opacity: 1;
+        }
+
+        .tenant-input:focus {
+            border-color: var(--brand);
+            outline: 3px solid rgba(41, 74, 206, 0.2);
+            outline-offset: 1px;
+        }
+
+        .field-help {
+            margin: 7px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .warning-note {
+            display: grid;
+            grid-template-columns: 24px minmax(0, 1fr);
+            gap: 11px;
+            margin: 20px 0;
+            padding: 14px 15px;
+            border: 1px solid #ead796;
+            border-left: 4px solid var(--warning-border);
+            border-radius: 8px;
+            background: var(--warning-bg);
+            color: var(--warning);
+            font-size: 14px;
+        }
+
+        .warning-symbol {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.4;
             text-align: center;
-            padding: 20px;
-            margin-top: 40px;
         }
 
-        .gordon-icon {
-            margin-right: 8px;
+        .warning-note p {
+            margin: 0;
         }
 
-        .gordon-flex {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
+        .primary-button {
+            display: inline-flex;
+            min-height: 56px;
+            padding: 14px 25px;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 1px solid var(--gordon-orange);
+            border-radius: 30px;
+            background: var(--gordon-orange);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.2;
+            transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
         }
 
-        @media (max-width: 768px) {
-            .gordon-container {
-                margin: 20px;
-                padding: 20px;
+        .primary-button:hover {
+            border-color: var(--gordon-orange-hover);
+            background: var(--gordon-orange-hover);
+        }
+
+        .primary-button:active {
+            transform: translateY(1px);
+        }
+
+        .primary-button svg {
+            width: 20px;
+            height: 20px;
+            flex: 0 0 auto;
+        }
+
+        .redirect-note {
+            margin: 11px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .form-error {
+            margin: 0 0 14px;
+            padding: 10px 12px;
+            border-left: 4px solid var(--error-border);
+            border-radius: 5px;
+            background: var(--error-bg);
+            color: var(--error);
+        }
+
+        .feedback {
+            display: grid;
+            grid-template-columns: 42px minmax(0, 1fr);
+            gap: 16px;
+            margin-top: 22px;
+            padding: 23px;
+            border: 1px solid;
+            border-left-width: 5px;
+            border-radius: 12px;
+        }
+
+        .feedback--success {
+            border-color: #b7dcb7;
+            border-left-color: var(--success-border);
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .feedback--warning {
+            border-color: #ead796;
+            border-left-color: var(--warning-border);
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+
+        .feedback--error {
+            border-color: #e7b9bd;
+            border-left-color: var(--error-border);
+            background: var(--error-bg);
+            color: var(--error);
+        }
+
+        .feedback-icon {
+            display: grid;
+            width: 40px;
+            height: 40px;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            font-size: 23px;
+            font-weight: 700;
+            line-height: 1;
+            place-items: center;
+        }
+
+        .feedback-content {
+            min-width: 0;
+        }
+
+        .feedback-content h2 {
+            margin: 0 0 8px;
+            font-size: 21px;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .feedback-content p {
+            margin: 0 0 8px;
+        }
+
+        .feedback-content p:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .details-heading {
+            margin: 18px 0 7px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .details-list {
+            margin: 0;
+            border-top: 1px solid currentColor;
+            border-color: rgba(27, 26, 25, 0.2);
+        }
+
+        .detail-row {
+            display: grid;
+            grid-template-columns: minmax(140px, 0.35fr) minmax(0, 1fr);
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(27, 26, 25, 0.16);
+        }
+
+        .detail-row dt {
+            font-weight: 650;
+        }
+
+        .detail-row dd {
+            min-width: 0;
+            margin: 0;
+            color: #263746;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .faq-panel {
+            padding-bottom: 15px;
+        }
+
+        .faq-panel > h2 {
+            margin-bottom: 12px;
+        }
+
+        .faq-item {
+            border-top: 1px solid #e2e8ef;
+        }
+
+        .faq-item:last-child {
+            border-bottom: 1px solid #e2e8ef;
+        }
+
+        .faq-item summary {
+            position: relative;
+            padding: 15px 32px 15px 2px;
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 650;
+            list-style: none;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary::after {
+            position: absolute;
+            top: 14px;
+            right: 4px;
+            color: var(--brand);
+            content: "+";
+            font-size: 22px;
+            font-weight: 400;
+            line-height: 1;
+        }
+
+        .faq-item[open] summary::after {
+            content: "−";
+        }
+
+        .faq-answer {
+            max-width: 760px;
+            padding: 0 24px 15px 2px;
+            color: var(--muted);
+        }
+
+        .faq-answer p {
+            margin: 0;
+        }
+
+        .site-footer {
+            padding: 0 20px 28px;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .site-footer p {
+            margin: 0;
+        }
+
+        @media (max-width: 640px) {
+            .header-inner {
+                width: min(100% - 32px, 1000px);
+                min-height: 64px;
             }
 
-            .gordon-flex {
-                flex-direction: column;
+            .header-context {
+                max-width: 125px;
+                font-size: 12px;
+                line-height: 1.35;
+                text-align: right;
+            }
+
+            .page-shell {
+                width: min(100% - 32px, 900px);
+                padding: 34px 0 46px;
+            }
+
+            .panel {
+                padding: 21px;
+                border-radius: 13px;
+            }
+
+            .authorization-panel {
+                padding: 23px 20px;
+            }
+
+            .intro-panel {
+                grid-template-columns: 34px minmax(0, 1fr);
+                gap: 12px;
+            }
+
+            .info-mark {
+                width: 34px;
+                height: 34px;
+                font-size: 18px;
+            }
+
+            .app-details {
+                grid-template-columns: 1fr;
+            }
+
+            .primary-button {
+                width: 100%;
+            }
+
+            .feedback {
+                grid-template-columns: 32px minmax(0, 1fr);
+                gap: 12px;
+                padding: 18px 15px;
+            }
+
+            .feedback-icon {
+                width: 31px;
+                height: 31px;
+                font-size: 18px;
+            }
+
+            .feedback-content h2 {
+                font-size: 19px;
+            }
+
+            .detail-row {
+                grid-template-columns: 1fr;
+                gap: 2px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="gordon-container">
-        <h1>Gordon SaaS Admin Consent Helper</h1>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-        <div class="gordon-info">
-            <p><strong>This tool helps administrators grant consent for an application to access Business
-                    Central.</strong></p>
-            <p>When you click the button below, you'll be redirected to Microsoft's authorization page where you can
-                review and approve the permissions as an administrator.</p>
-        </div>
-
-        <div class="gordon-card">
-            <h2>Application Details</h2>
-            <p><strong>Application ID:</strong> <span class="gordon-code">97e473b7-494e-4abd-bfc2-4c78102c3795</span>
-            </p>
-            <p><strong>Required Scope:</strong> <span
-                    class="gordon-code">https://api.businesscentral.dynamics.com/.default</span></p>
-        </div>
-
-        <div>
-            <h2>Enter Your Tenant Information</h2>
-            <p>Please enter your Azure AD tenant ID or domain name:</p>
-            <input type="text" id="tenantId" class="gordon-input" placeholder="contoso.onmicrosoft.com or tenant ID">
-            <button onclick="generateUrl()" class="gordon-btn">
-                <i class="fas fa-link gordon-icon"></i>Generate Consent URL
-            </button>
-
-            <div id="urlResult" style="display: none; margin-top: 20px;">
-                <h2>Admin Consent URL</h2>
-                <p>Use this URL to grant admin consent:</p>
-                <div class="gordon-url-display" id="consentUrl"></div>
-                <div class="gordon-flex">
-                    <button onclick="openConsentUrl()" class="gordon-btn">
-                        <i class="fas fa-external-link-alt gordon-icon"></i>Open Consent Page
-                    </button>
-                    <button onclick="copyUrl()" class="gordon-btn gordon-btn-secondary">
-                        <i class="fas fa-copy gordon-icon"></i>Copy URL
-                    </button>
-                </div>
+    <!--<header class="site-header">
+        <div class="header-inner">
+            <div class="brand" aria-label="Gordon by EOS Solutions">
+                <span class="brand-mark" aria-hidden="true">G</span>
+                <span>
+                    <span class="brand-name">Gordon</span>
+                    <span class="brand-owner">EOS Solutions</span>
+                </span>
             </div>
+            <span class="header-context">Microsoft Entra tenant setup</span>
         </div>
+    </header>-->
 
-        <div style="margin-top: 30px;">
-            <h2>What is happening?</h2>
-            <p>This tool generates a URL that directs administrators to Microsoft's consent page for the specific
-                application with ID: <span class="gordon-code">97e473b7-494e-4abd-bfc2-4c78102c3795</span>.</p>
-            <p>The application is requesting access to Business Central API with the scope: <span
-                    class="gordon-code">https://api.businesscentral.dynamics.com/.default</span></p>
-            <p>By granting admin consent, you're allowing this application to access Business Central on behalf of users
-                in your organization.</p>
-        </div>
-    </div>
+    <main id="main" class="page-shell">
+        <section class="hero" aria-labelledby="page-title">
+            <span class="eyebrow">Tenant authorization</span>
+            <h1 id="page-title">Authorize Gordon in Your Microsoft Tenant</h1>
+            <p class="hero-description">Complete the one-time authorization for your organization in Microsoft Entra ID.</p>
+        </section>
+
+        <section class="panel" aria-labelledby="application-heading">
+            <div class="panel-heading">
+                <h2 id="application-heading">Application Information</h2>
+            </div>
+            <dl class="app-details">
+                <div class="app-detail">
+                    <dt>Application Name</dt>
+                    <dd>Gordon for Business Central Online</dd>
+                </div>
+                <div class="app-detail">
+                    <dt>Application ID</dt>
+                    <dd><code>97e473b7-494e-4abd-bfc2-4c78102c3795</code></dd>
+                </div>
+            </dl>
+        </section>
+
+        <section class="panel authorization-panel" aria-labelledby="authorize-heading">
+            <div class="panel-heading">
+                <h2 id="authorize-heading">One-Time tenant authorization</h2>
+                <p>Continue to Microsoft Entra ID using an administrator account for the tenant you want to authorize.</p>
+            </div>
+
+            <form id="authorizationForm" novalidate>
+                <div class="tenant-field">
+                    <label for="tenantId">Target tenant <span class="optional-label">(optional)</span></label>
+                    <input id="tenantId" class="tenant-input" type="text" inputmode="url" autocomplete="off"
+                        autocapitalize="none" spellcheck="false" placeholder="contoso.onmicrosoft.com or tenant ID"
+                        aria-describedby="tenantHelp">
+                    <p id="tenantHelp" class="field-help">
+                        Enter a tenant ID or domain to target that tenant directly. Leave blank to use the organizational sign-in flow.
+                    </p>
+                </div>
+
+                <div class="warning-note" role="note">
+                    <span class="warning-symbol" aria-hidden="true">!</span>
+                    <p>Only proceed if you are a Microsoft Entra administrator for the intended tenant. Review Microsoft's authorization request before confirming it.</p>
+                </div>
+
+                <p id="formError" class="form-error" role="alert" hidden></p>
+
+                <button class="primary-button" type="submit">
+                    <span>Authorize Gordon</span>
+                    <svg aria-hidden="true" viewBox="0 0 20 20" fill="none">
+                        <path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <p class="redirect-note">You will be redirected to Microsoft Entra ID and returned to this page.</p>
+            </form>
+        </section>
+
+        <section class="panel intro-panel" aria-labelledby="info-heading">
+            <span class="info-mark" aria-hidden="true">i</span>
+            <div class="intro-copy">
+                <h2 id="info-heading">Important information</h2>
+                <p><strong>Gordon needs to be authorized once in your Microsoft Entra tenant.</strong></p>
+                <p>This operation allows Microsoft Entra ID to create the Enterprise Application required to use Gordon with your tenant.</p>
+                <p>No App Registration needs to be created by the customer.</p>
+                <p>No secrets or certificates are required.</p>
+                <p>No Business Central Admin Center permissions are requested.</p>
+            </div>
+        </section>
+
+        <section id="successPanel" class="feedback feedback--success" aria-labelledby="successTitle" role="status"
+            aria-live="polite" hidden>
+            <span class="feedback-icon" aria-hidden="true">✓</span>
+            <div class="feedback-content">
+                <h2 id="successTitle">✅ Gordon Successfully Authorized</h2>
+                <p>Gordon has been authorized for this Microsoft Entra tenant.</p>
+                <p>The Enterprise Application has been created and users can now sign in to Gordon.</p>
+                <h3 class="details-heading">Authorization details</h3>
+                <dl id="successDetails" class="details-list"></dl>
+            </div>
+        </section>
+
+        <section id="errorPanel" class="feedback feedback--error" aria-labelledby="errorTitle" role="alert"
+            aria-live="assertive" hidden>
+            <span class="feedback-icon" aria-hidden="true">!</span>
+            <div class="feedback-content">
+                <h2 id="errorTitle">❌ Authorization Failed</h2>
+                <p id="errorSummary"></p>
+                <h3 class="details-heading">Microsoft Entra response details</h3>
+                <dl id="errorDetails" class="details-list"></dl>
+            </div>
+        </section>
+
+        <section id="warningPanel" class="feedback feedback--warning" aria-labelledby="warningTitle" role="status"
+            aria-live="polite" hidden>
+            <span class="feedback-icon" aria-hidden="true">!</span>
+            <div class="feedback-content">
+                <h2 id="warningTitle"></h2>
+                <p id="warningSummary"></p>
+                <h3 class="details-heading">Microsoft Entra response details</h3>
+                <dl id="warningDetails" class="details-list"></dl>
+            </div>
+        </section>
+
+        <section class="panel faq-panel" aria-labelledby="faq-heading">
+            <h2 id="faq-heading">Frequently Asked Questions</h2>
+
+            <details class="faq-item">
+                <summary>Why is authorization required?</summary>
+                <div class="faq-answer">
+                    <p>Microsoft Entra ID requires every customer tenant to explicitly authorize third-party multi-tenant applications. This authorization creates the Enterprise Application that Gordon uses to access tenant resources.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>Do I need to create an App Registration?</summary>
+                <div class="faq-answer">
+                    <p>No.</p>
+                    <p>Gordon uses an App Registration managed by EOS Solutions. Customers only need to authorize the application once.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>Is this required every time?</summary>
+                <div class="faq-answer">
+                    <p>No.</p>
+                    <p>This is a one-time operation per tenant. After authorization the Enterprise Application remains available in the tenant.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>Are any Business Central Admin permissions granted?</summary>
+                <div class="faq-answer">
+                    <p>No.</p>
+                    <p>This process does not grant Business Central Admin Center permissions and does not require AdminCenter.ReadWrite.All.</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>Gordon for Business Central Online · EOS Solutions</p>
+    </footer>
 
     <script>
-        function generateUrl() {
-            const tenantId = document.getElementById('tenantId').value.trim();
+        (() => {
+            'use strict';
 
-            if (!tenantId) {
-                alert('Please enter your tenant ID or domain name');
-                return;
+            const APPLICATION_ID = '97e473b7-494e-4abd-bfc2-4c78102c3795';
+            const AUTHORITY_ROOT = 'https://login.microsoftonline.com';
+            const STATE_STORAGE_KEY = 'gordon.tenantAuthorization.state';
+            const TENANT_IDENTIFIER_PATTERN = /^[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?$/i;
+
+            const form = document.getElementById('authorizationForm');
+            const tenantInput = document.getElementById('tenantId');
+            const formError = document.getElementById('formError');
+            const successPanel = document.getElementById('successPanel');
+            const errorPanel = document.getElementById('errorPanel');
+            const warningPanel = document.getElementById('warningPanel');
+
+            // Microsoft returns the admin-consent result to this same static page.
+            // The state value lets this page associate the response with the user's
+            // current authorization attempt; no token or secret is handled here.
+            function createState() {
+                if (!window.crypto || typeof window.crypto.getRandomValues !== 'function') {
+                    throw new Error('Secure browser randomness is not available.');
+                }
+
+                const bytes = new Uint8Array(32);
+                window.crypto.getRandomValues(bytes);
+                return Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
             }
 
-            const appId = '97e473b7-494e-4abd-bfc2-4c78102c3795';
-            const scope = 'https://api.businesscentral.dynamics.com/.default';
+            function getRedirectUri() {
+                const redirectUri = new URL(window.location.href);
+                // Do not send previous response parameters back to Microsoft. The clean
+                // page URL must be registered by EOS Solutions on the shared app.
+                redirectUri.search = '';
+                redirectUri.hash = '';
+                return redirectUri.href;
+            }
 
-            const consentUrl = `https://login.microsoftonline.com/${tenantId}/adminconsent?client_id=${appId}&scope=${encodeURIComponent(scope)}&redirect_uri=${encodeURIComponent(window.location.href)}`;
+            function showFormError(message) {
+                formError.textContent = message;
+                formError.hidden = false;
+            }
 
-            document.getElementById('consentUrl').textContent = consentUrl;
-            document.getElementById('urlResult').style.display = 'block';
-        }
+            function hideFeedbackPanels() {
+                successPanel.hidden = true;
+                errorPanel.hidden = true;
+                warningPanel.hidden = true;
+            }
 
-        function openConsentUrl() {
-            const consentUrl = document.getElementById('consentUrl').textContent;
-            window.open(consentUrl, '_blank');
-        }
+            function showPanel(panel) {
+                panel.hidden = false;
+                panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
 
-        function copyUrl() {
-            const consentUrl = document.getElementById('consentUrl').textContent;
-            navigator.clipboard.writeText(consentUrl).then(() => {
-                alert('URL copied to clipboard!');
-            }).catch(err => {
-                console.error('Could not copy text: ', err);
-                // Fallback
-                const tempInput = document.createElement('textarea');
-                tempInput.value = consentUrl;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempInput);
-                alert('URL copied to clipboard!');
-            });
-        }
+            function startAuthorization(event) {
+                event.preventDefault();
+                formError.hidden = true;
+
+                const tenant = tenantInput.value.trim();
+                // Accept tenant IDs/domains only. This prevents path separators, dot
+                // segments, and other input from changing the authorization endpoint.
+                if (tenant && (!TENANT_IDENTIFIER_PATTERN.test(tenant) || tenant.includes('..'))) {
+                    showFormError('Enter a valid tenant ID or domain, or leave this field blank.');
+                    tenantInput.focus();
+                    return;
+                }
+
+                let state;
+                try {
+                    state = createState();
+                    window.sessionStorage.setItem(STATE_STORAGE_KEY, state);
+                } catch (error) {
+                    console.error('[Gordon tenant authorization] Could not prepare secure authorization state:', error);
+                    showFormError('Your browser could not prepare a secure authorization session. Please enable session storage and try again.');
+                    return;
+                }
+
+                const redirectUri = getRedirectUri();
+                const authorityTenant = tenant ? encodeURIComponent(tenant) : 'organizations';
+                const authorizationUrl = new URL(`${AUTHORITY_ROOT}/${authorityTenant}/adminconsent`);
+
+                // Use Entra's multi-tenant admin-consent endpoint with Gordon's existing
+                // client ID. This legacy endpoint needs no scope parameter here: the
+                // authorization is handled by the shared app registration's configured
+                // delegated permissions. This page adds no scopes, roles, or permissions.
+                authorizationUrl.search = new URLSearchParams({
+                    client_id: APPLICATION_ID,
+                    redirect_uri: redirectUri,
+                    state
+                }).toString();
+
+                console.info('[Gordon tenant authorization] Starting Microsoft Entra authorization.', {
+                    applicationId: APPLICATION_ID,
+                    tenant: tenant || '(organizational account sign-in)',
+                    redirectUri,
+                    authorizationUrl: authorizationUrl.href
+                });
+
+                window.location.assign(authorizationUrl.href);
+            }
+
+            function readRedirectParameters() {
+                const query = new URLSearchParams(window.location.search);
+                const fragmentText = window.location.hash.startsWith('#')
+                    ? window.location.hash.slice(1)
+                    : window.location.hash;
+                const fragment = new URLSearchParams(fragmentText);
+                const queryEntries = Array.from(query.entries());
+                const fragmentEntries = Array.from(fragment.entries());
+
+                // Keep both the original strings and decoded key/value pairs in the
+                // console to help EOS support troubleshoot tenant onboarding issues.
+                console.groupCollapsed('[Gordon tenant authorization] Redirect diagnostics');
+                console.info('Raw query string:', window.location.search);
+                console.info('Raw URL fragment:', window.location.hash);
+                console.info('Query parameter values:', queryEntries.map(([name, value]) => ({ name, value })));
+                console.info('Fragment parameter values:', fragmentEntries.map(([name, value]) => ({ name, value })));
+                console.groupEnd();
+
+                function getValue(...names) {
+                    const normalizedNames = names.map(name => name.toLowerCase());
+                    for (const source of [query, fragment]) {
+                        for (const [key, value] of source.entries()) {
+                            if (normalizedNames.includes(key.toLowerCase())) {
+                                return value;
+                            }
+                        }
+                    }
+                    return '';
+                }
+
+                return {
+                    error: getValue('error'),
+                    errorDescription: getValue('error_description', 'errorDescription'),
+                    tenant: getValue('tenant'),
+                    adminConsent: getValue('admin_consent', 'adminConsent'),
+                    state: getValue('state'),
+                    traceId: getValue('trace_id', 'traceId'),
+                    correlationId: getValue('correlation_id', 'correlationId'),
+                    timestamp: getValue('timestamp')
+                };
+            }
+
+            function appendDetails(list, items) {
+                list.replaceChildren();
+
+                for (const item of items) {
+                    if (item.value === '' || item.value === null || item.value === undefined) {
+                        continue;
+                    }
+
+                    const row = document.createElement('div');
+                    row.className = 'detail-row';
+
+                    const label = document.createElement('dt');
+                    label.textContent = item.label;
+
+                    const value = document.createElement('dd');
+                    value.textContent = item.value;
+
+                    row.append(label, value);
+                    list.appendChild(row);
+                }
+            }
+
+            function responseMetadata(response) {
+                return [
+                    { label: 'Tenant ID', value: response.tenant },
+                    { label: 'Admin consent', value: response.adminConsent },
+                    { label: 'State', value: response.state },
+                    { label: 'Correlation ID', value: response.correlationId },
+                    { label: 'Trace ID', value: response.traceId },
+                    { label: 'Timestamp', value: response.timestamp }
+                ];
+            }
+
+            function showSuccess(response) {
+                appendDetails(document.getElementById('successDetails'), responseMetadata(response));
+                hideFeedbackPanels();
+                showPanel(successPanel);
+                console.info('[Gordon tenant authorization] Microsoft Entra reported successful authorization.', response);
+            }
+
+            function showError(response) {
+                const isDeclined = response.adminConsent.toLowerCase() === 'false';
+                const errorCode = response.error || (isDeclined ? 'access_denied' : 'Not provided by Microsoft Entra ID');
+                const errorDescription = response.errorDescription || (isDeclined
+                    ? 'The authorization request was not approved or was canceled.'
+                    : 'Microsoft Entra ID could not complete the authorization. Review the response details and try again.');
+
+                document.getElementById('errorSummary').textContent =
+                    'Microsoft Entra ID could not complete the authorization. Review the details below, then try again or share them with your administrator or support team.';
+                appendDetails(document.getElementById('errorDetails'), [
+                    { label: 'Error code', value: errorCode },
+                    { label: 'Error description', value: errorDescription },
+                    { label: 'Correlation ID', value: response.correlationId },
+                    { label: 'Trace ID', value: response.traceId },
+                    { label: 'Timestamp', value: response.timestamp },
+                    { label: 'Tenant ID', value: response.tenant },
+                    { label: 'Admin consent', value: response.adminConsent },
+                    { label: 'State', value: response.state }
+                ]);
+
+                hideFeedbackPanels();
+                showPanel(errorPanel);
+                console.error('[Gordon tenant authorization] Microsoft Entra returned an authorization failure.', response);
+            }
+
+            function showWarning(title, message, response) {
+                document.getElementById('warningTitle').textContent = title;
+                document.getElementById('warningSummary').textContent = message;
+                appendDetails(document.getElementById('warningDetails'), responseMetadata(response));
+                hideFeedbackPanels();
+                showPanel(warningPanel);
+                console.warn('[Gordon tenant authorization] Authorization response needs attention.', response);
+            }
+
+            function handleRedirectResponse() {
+                const response = readRedirectParameters();
+                const hasResponseValues = Object.values(response).some(value => value !== '');
+                if (!hasResponseValues) {
+                    return;
+                }
+
+                const isSuccess = response.adminConsent.toLowerCase() === 'true';
+                const isFailure = Boolean(response.error || response.errorDescription)
+                    || response.adminConsent.toLowerCase() === 'false';
+
+                if (isFailure) {
+                    showError(response);
+                    return;
+                }
+
+                if (isSuccess) {
+                    let expectedState = null;
+                    try {
+                        expectedState = window.sessionStorage.getItem(STATE_STORAGE_KEY);
+                    } catch (error) {
+                        console.warn('[Gordon tenant authorization] Could not read the saved state value:', error);
+                    }
+
+                    if (expectedState && (!response.state || response.state !== expectedState)) {
+                        showWarning(
+                            'Authorization response could not be verified',
+                            'Microsoft Entra ID returned a success response, but it did not match the authorization started in this browser session. Start the authorization again to verify the result.',
+                            response
+                        );
+                        return;
+                    }
+
+                    showSuccess(response);
+                    return;
+                }
+
+                showWarning(
+                    'Authorization result is incomplete',
+                    'Microsoft Entra ID returned some response information, but no successful authorization or specific error was reported. Review the details or try the authorization again.',
+                    response
+                );
+            }
+
+            form.addEventListener('submit', startAuthorization);
+            handleRedirectResponse();
+        })();
     </script>
 </body>
 
