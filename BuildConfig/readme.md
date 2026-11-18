@@ -114,6 +114,7 @@ A configuration file is a JSON object. All properties are optional.
 |----------|------|-------------|
 | `Description` | `string` | A human-readable label for this configuration. |
 | `Metadata` | object | Version and source-control metadata to stamp into the app before building. See [Metadata](#metadata). |
+| `ResourceExposurePolicy` | object | Overrides specified resource exposure settings in `app.json`. See [Resource exposure policy](#resource-exposure-policy). |
 | `Options` | object | Compiler (`alc.exe`) options. See [Options](#options). |
 | `OptionsFile` | `string` | Path to a JSON file containing compiler options. When specified, `Options` is ignored. |
 | `IncludePatterns` | `string[]` | Glob patterns of files to include in the build. When omitted, all files are included. |
@@ -135,6 +136,28 @@ Nested under the `metadata` key.
 | `Commit` | `string` | Source commit SHA to embed in the package (runtime ≥ 12). |
 | `BuildBy` | `string` | Name of the system or agent that performed the build (runtime ≥ 12). |
 | `BuildUrl` | `string` | URL of the build job or pipeline run (runtime ≥ 12). |
+
+### Resource exposure policy
+
+Nested under the `ResourceExposurePolicy` key. Specified values are written to the project's `app.json` before compilation; omitted values leave the existing `resourceExposurePolicy` settings unchanged. The fields merge individually across inherited build configurations, with the most specific non-null value taking precedence.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `AllowDebugging` | `bool` | Sets `resourceExposurePolicy.allowDebugging`. |
+| `AllowDownloadingSource` | `bool` | Sets `resourceExposurePolicy.allowDownloadingSource`. |
+| `IncludeSourceInSymbolFile` | `bool` | Sets `resourceExposurePolicy.includeSourceInSymbolFile`. |
+
+Example:
+
+```json
+{
+  "ResourceExposurePolicy": {
+    "AllowDebugging": false,
+    "AllowDownloadingSource": false,
+    "IncludeSourceInSymbolFile": false
+  }
+}
+```
 
 ### Options
 
