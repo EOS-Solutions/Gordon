@@ -37,6 +37,24 @@
                 }
             }
         },
+        "ResourceExposurePolicy": {
+            "type": "object",
+            "description": "Overrides specified resource exposure settings in the project's app.json manifest.",
+            "properties": {
+                "AllowDebugging": {
+                    "type": "boolean",
+                    "description": "Specifies whether debugging is allowed for the extension."
+                },
+                "AllowDownloadingSource": {
+                    "type": "boolean",
+                    "description": "Specifies whether the source code can be downloaded."
+                },
+                "IncludeSourceInSymbolFile": {
+                    "type": "boolean",
+                    "description": "Specifies whether source code is included in the symbol file."
+                }
+            }
+        },
         "Options": {
             "type": "object",
             "description": "The ALC options for the build configuration.",
